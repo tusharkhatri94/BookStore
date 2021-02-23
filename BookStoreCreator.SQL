@@ -1,3 +1,5 @@
+USE bookstoreschema;
+
 CREATE TABLE Customers (
     customerID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     firstName varchar(255) NOT NULL,
@@ -14,6 +16,7 @@ CREATE TABLE Addresses (
     province VARCHAR(20) NOT NULL,
     country VARCHAR(45) NOT NULL,
     pincode VARCHAR(7) NOT NULL,
+    customerID INT NOT NULL,
     CONSTRAINT FK_customerID FOREIGN KEY (customerID)
     REFERENCES Customers(customerID)
 );
@@ -24,16 +27,11 @@ CREATE TABLE Orders (
     subTotal DECIMAL(10,2) NOT NULL,
     shipAmount DECIMAL(10,2) NOT NULL,
     taxAmount DECIMAL(10,2) NOT NULL,
-    CONSTRAINT FK_customerID FOREIGN KEY (customerID)
+    customerID INT NOT NULL,
+    CONSTRAINT FKO_customerID FOREIGN KEY (customerID)
     REFERENCES Customers(customerID)
 );
 
-CREATE TABLE Inventory (
-    inventoryID int NOT NULL PRIMARY KEY  AUTO_INCREMENT,
-    CONSTRAINT fk_bookID FOREIGN KEY (bookID)
-    REFERENCES Books(bookID),
-    availableQuantity int NOT NULL
-);
 
 CREATE TABLE Authors (
     authorID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -44,7 +42,7 @@ CREATE TABLE Authors (
 CREATE TABLE Publishers (
     publisherID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     publisherName varchar(255) NOT NULL,
-    country varchar(255) NOT NULL,
+    country varchar(255) NOT NULL
 );
 
 CREATE TABLE Books (
@@ -53,8 +51,18 @@ CREATE TABLE Books (
     genre varchar(255) NOT NULL,
     price varchar(255) NOT NULL,
     yearPublished varchar(4) NOT NULL,
+    authorID INT NOT NULL,
+    publisherID INT NOT NULL,
     CONSTRAINT FK_authorID FOREIGN KEY (authorID)
     REFERENCES Authors(authorID),
     CONSTRAINT FK_publisherID FOREIGN KEY (publisherID)
     REFERENCES Publishers(publisherID)
+);
+
+CREATE TABLE Inventory (
+    inventoryID int NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+    bookID INT NOT NULL,
+    CONSTRAINT fk_bookID FOREIGN KEY (bookID)
+    REFERENCES Books(bookID),
+    availableQuantity int NOT NULL
 );
