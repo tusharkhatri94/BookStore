@@ -64,4 +64,4 @@ INSERT INTO Inventory (bookID, availableQuantity)
 VALUES (6, 220);
 
 INSERT INTO Inventory (bookID, availableQuantity) 
-VALUES (7, 125);
+VALUES (7, 120);
