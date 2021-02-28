@@ -5,7 +5,9 @@ CREATE TABLE Customers (
     firstName varchar(255) NOT NULL,
     lastName varchar(255) NOT NULL,
     emailAddress varchar(255) NOT NULL,
-    phoneNumber varchar(255) NOT NULL
+    phoneNumber varchar(255) NOT NULL,
+    Cpassword varchar(255) NOT NULL,
+    username varchar(255) NOT NULL
 );
 
 CREATE TABLE Addresses (
@@ -66,3 +68,4 @@ CREATE TABLE Inventory (
     REFERENCES Books(bookID),
     availableQuantity int NOT NULL
 );
+
