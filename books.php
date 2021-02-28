@@ -1,188 +1,39 @@
+
 <?php 
-    require('mysqli_connect.php');
+  require('mysqli_connect.php');
+
+  $q1 = 'SELECT * FROM books b JOIN authors a ON b.authorID = a.authorID';
+  $r1 = @mysqli_query($connection, $q1);
+
+  while($row = mysqli_fetch_array($r1 )) {
+    echo "<div>
+            <p>Name: $row[title]</p>
+            <p>Genre: $row[genre]</p>
+            <p>Price: $row[price]$</p>
+            <p>Author: $row[authorFirstName] $row[authorLastName]</p>
+            <form method='POST' action='books.php'>
+              <button name='id' value=$row[bookID] type='submit'>Add to Cart</button>
+            </form>
+          </div>
+          <hr>";
+  }
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Set the cookie
+
+    $cookie_name = "book";
+    $cookie_value = $_POST['id'];
+    //$cookie_value = "John Doe";
+    setcookie($cookie_name,$cookie_value, time()+3600);  /* expire in 1 hour */
+    header("Location: checkout.php");
+
+
+  }
     
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if ( !empty($_POST['username']) && !empty($_POST['password']))  {
-                
-            $username = mysqli_real_escape_string($connection, trim($_POST['username']));
-            $password = mysqli_real_escape_string($connection, trim($_POST['password']));
 
-            $q1 = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-            $result = @mysqli_query($connection, $q1);
+  mysqli_free_result($r1);
 
-            if(mysqli_num_rows($result) == 1) {
-                session_start();
-                $_SESSION['login']= True;
-                header("Location: account.php");
-            }
-            else {
-                echo "Invalid Login Information";
-            }
-           
-        }
-        else {
-            echo "Input cannot be empty";
-        }
-    }
+  mysqli_close($connection);
+
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookStore</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-      /*
- * Globals
- */
-
-      /* Links */
-      a,
-      a:focus,
-      a:hover {
-        color: #fff;
-      }
-
-      /* Custom default button */
-      .btn-secondary,
-      .btn-secondary:hover,
-      .btn-secondary:focus {
-        color: #123;
-        text-shadow: none; /* Prevent inheritance from `body` */
-        background-color: #fff;
-        border: 0.05rem solid #fff;
-      }
-
-      /*
- * Base structure
- */
-
-      html,
-      body {
-        height: 100%;
-        background-color: #123;
-      }
-
-      body {
-        display: -ms-flexbox;
-        display: flex;
-        color: #fff;
-        text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
-        box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
-      }
-
-      .cover-container {
-        max-width: 60em;
-      }
-
-      /*
- * Header
- */
-      .masthead {
-        margin-bottom: 2rem;
-      }
-
-      .masthead-brand {
-        margin-bottom: 0;
-      }
-
-      .nav-masthead .nav-link {
-        padding: 0.25rem 0;
-        font-weight: 700;
-        color: rgba(255, 255, 255, 0.8);
-        background-color: transparent;
-        border-bottom: 0.25rem solid transparent;
-      }
-
-      .nav-masthead .nav-link:hover,
-      .nav-masthead .nav-link:focus {
-        border-bottom-color: rgba(255, 255, 255, 0.5);
-      }
-
-      .nav-masthead .nav-link + .nav-link {
-        margin-left: 1rem;
-      }
-
-      .nav-masthead .active {
-        color: #fff;
-        border-bottom-color: #fff;
-      }
-
-      @media (min-width: 48em) {
-        .masthead-brand {
-          float: left;
-        }
-        .nav-masthead {
-          float: right;
-        }
-      }
-
-      /*
- * Cover
- */
-      .cover {
-        padding: 0 1.5rem;
-      }
-      .cover .btn-lg {
-        padding: 0.75rem 1.25rem;
-        font-weight: 700;
-      }
-
-      /*
- * Footer
- */
-      .mastfoot {
-        color: rgba(255, 255, 255, 0.5);
-      }
-    </style>
-  </head>
-  <body class="text-center">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto">
-        <div class="inner">
-          <h3 class="masthead-brand">BookStore</h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link" href="index.html">Home</a>
-            <a class="nav-link active" href="books.html">Books</a>
-          </nav>
-        </div>
-      </header>
-
-      <main role="main" class="inner cover">
-        <h1 class="cover-heading">Books available</h1>
-        <p class="lead">
-          Below are the books available to purchase. Please click on the button
-          to proceed.
-        </p>
-      </main>
-
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <p></p>
-        </div>
-      </footer>
-    </div>
-  </body>
-</html>
