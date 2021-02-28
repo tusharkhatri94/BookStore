@@ -1,3 +1,31 @@
+<?php 
+    require('mysqli_connect.php');
+    
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ( !empty($_POST['username']) && !empty($_POST['password']))  {
+                
+            $username = mysqli_real_escape_string($connection, trim($_POST['username']));
+            $password = mysqli_real_escape_string($connection, trim($_POST['password']));
+
+            $q1 = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+            $result = @mysqli_query($connection, $q1);
+
+            if(mysqli_num_rows($result) == 1) {
+                session_start();
+                $_SESSION['login']= True;
+                header("Location: account.php");
+            }
+            else {
+                echo "Invalid Login Information";
+            }
+           
+        }
+        else {
+            echo "Input cannot be empty";
+        }
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
