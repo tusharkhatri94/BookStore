@@ -1,10 +1,10 @@
 USE bookstoreschema;
 
-INSERT INTO Customers (firstName, lastName, emailAddress, phoneNumber)
-VALUES ('Tushar', 'Khatri', 'tushar@khatri.com', '111-222-3333');
+INSERT INTO Customers (firstName, lastName, emailAddress, phoneNumber, Cpassword, username)
+VALUES ('Tushar', 'Khatri', 'tushar@khatri.com', '111-222-3333','abc123','tushar');
 
-INSERT INTO Customers (firstName, lastName, emailAddress, phoneNumber)
-VALUES ('Kriti', 'Manchanda', 'kriti@manchanda.com', '222-333-4444');
+INSERT INTO Customers (firstName, lastName, emailAddress, phoneNumber, Cpassword, username)
+VALUES ('Kriti', 'Manchanda', 'kriti@manchanda.com', '222-333-4444','xyz789','kriti');
 
 INSERT INTO Addresses (line1, line2, city, province,country,pincode,customerID)
 VALUES ('Address Line1','','Kitchener','ON','Canada','A1B2C2',1);
