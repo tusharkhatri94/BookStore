@@ -1,17 +1,5 @@
 USE bookstoreschema;
 
-INSERT INTO Customers (firstName, lastName, emailAddress, phoneNumber, Cpassword, username)
-VALUES ('Tushar', 'Khatri', 'tushar@khatri.com', '111-222-3333','abc123','tushar');
-
-INSERT INTO Customers (firstName, lastName, emailAddress, phoneNumber, Cpassword, username)
-VALUES ('Kriti', 'Manchanda', 'kriti@manchanda.com', '222-333-4444','xyz789','kriti');
-
-INSERT INTO Addresses (line1, line2, city, province,country,pincode,customerID)
-VALUES ('Address Line1','','Kitchener','ON','Canada','A1B2C2',1);
-
-INSERT INTO Addresses (line1, line2, city, province,country,pincode,customerID)
-VALUES ('Address2 Line1','Line2','Kitchener','ON','Canada','D3E4F4',1);
-
 INSERT INTO Authors (authorFirstName,authorLastName) 
 VALUES ('J.K.','Rowling');
 
@@ -46,22 +34,22 @@ INSERT INTO Books (title,genre,price,yearPublished,authorID,publisherID)
 VALUES ("Are you afraid of the Dark?","Thriller","17","2004",2,2);
 
 INSERT INTO Inventory (bookID, availableQuantity) 
-VALUES (1, 200);
+VALUES (1, 7);
 
 INSERT INTO Inventory (bookID, availableQuantity) 
-VALUES (2, 250);
+VALUES (2, 7);
 
 INSERT INTO Inventory (bookID, availableQuantity) 
-VALUES (3, 100);
+VALUES (3, 7);
 
 INSERT INTO Inventory (bookID, availableQuantity) 
-VALUES (4, 150);
+VALUES (4, 7);
 
 INSERT INTO Inventory (bookID, availableQuantity) 
-VALUES (5, 100);
+VALUES (5, 7);
 
 INSERT INTO Inventory (bookID, availableQuantity) 
-VALUES (6, 220);
+VALUES (6, 7);
 
 INSERT INTO Inventory (bookID, availableQuantity) 
-VALUES (7, 120);
+VALUES (7, 7);
