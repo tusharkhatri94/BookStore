@@ -1,37 +1,15 @@
+CREATE DATABASE bookstoreschema;
+
 USE bookstoreschema;
-
-CREATE TABLE Customers (
-    customerID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    firstName varchar(255) NOT NULL,
-    lastName varchar(255) NOT NULL,
-    emailAddress varchar(255) NOT NULL,
-    phoneNumber varchar(255) NOT NULL,
-    Cpassword varchar(255) NOT NULL,
-    username varchar(255) NOT NULL
-);
-
-CREATE TABLE Addresses (
-    addressID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    line1 VARCHAR(255) NOT NULL,
-    line2 VARCHAR(255),
-    city VARCHAR(40) NOT NULL,
-    province VARCHAR(20) NOT NULL,
-    country VARCHAR(45) NOT NULL,
-    pincode VARCHAR(7) NOT NULL,
-    customerID INT NOT NULL,
-    CONSTRAINT FK_customerID FOREIGN KEY (customerID)
-    REFERENCES Customers(customerID)
-);
 
 CREATE TABLE Orders (
     orderID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     orderDate DATETIME NOT NULL,
-    subTotal DECIMAL(10,2) NOT NULL,
-    shipAmount DECIMAL(10,2) NOT NULL,
-    taxAmount DECIMAL(10,2) NOT NULL,
-    customerID INT NOT NULL,
-    CONSTRAINT FKO_customerID FOREIGN KEY (customerID)
-    REFERENCES Customers(customerID)
+    totalPrice DECIMAL(10,2) NOT NULL,
+    firstName varchar(255) NOT NULL,
+    lastName varchar(255) NOT NULL,
+    emailAddress varchar(255) NOT NULL,
+    phoneNumber varchar(255) NOT NULL,
 );
 
 
