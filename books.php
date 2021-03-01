@@ -2,7 +2,7 @@
 <?php 
   require('mysqli_connect.php');
 
-  $q1 = 'SELECT * FROM books b JOIN authors a ON b.authorID = a.authorID';
+  $q1 = 'SELECT * FROM books b JOIN authors a ON b.authorID = a.authorID JOIN Inventory i ON i.bookID = b.bookID WHERE availableQuantity > 0';
   $r1 = @mysqli_query($connection, $q1);
 
   while($row = mysqli_fetch_array($r1 )) {

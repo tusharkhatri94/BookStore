@@ -16,7 +16,53 @@
                     <p>Author: $row[authorFirstName] $row[authorLastName]</p>
                   </div>
                   <hr>";
+            $totalPrice =(float)$row['price'];
+            $bookID = (int)$row['bookID'];
           }
+
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ( !empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['email']) && !empty($_POST['phoneNumber']))  {
+
+                $firstName = strip_tags($_POST['firstName']);
+                $lastName = strip_tags($_POST['lastName']);
+                $email = strip_tags($_POST['email']);
+                $phoneNumber = strip_tags($_POST['phoneNumber']);
+                $orderDate = date("Y-m-d");
+                
+                $q = "INSERT INTO orders (firstName,lastName,emailAddress,phoneNumber,totalPrice,orderDate,bookID) VALUES ('$firstName', '$lastName','$email','$phoneNumber','$totalPrice','$orderDate','$bookID')";
+            
+                $r3 = @mysqli_query($connection,"SELECT * FROM Inventory where bookID = '$bookID'" );
+                while($row = mysqli_fetch_array($r3 )) {
+                    $availableQuantity = (int)$row['availableQuantity'];
+                    if($availableQuantity > 0) {
+                        if(mysqli_query($connection,"UPDATE Inventory SET availableQuantity = availableQuantity - 1 where bookID = '$bookID'" )) {
+                            echo "<p>Inventory Updated.</p>";
+                        } else {
+                            echo "Error: ". mysqli_error($connection);
+                        }
+                            
+                        if (mysqli_query($connection, $q)) {
+                            echo "<p>New record created successfully</p>";
+                        } else {
+                            echo "Error: " . $q . "<br>" . mysqli_error($connection);
+                        }
+                                
+                    }
+                    else {
+                        echo "<p>Sorry! Book is out of stock.</p>";
+                    }
+                    
+                }
+                               
+                
+                mysqli_close($connection);
+            
+            }
+            else {
+                echo "Input cannot be empty";
+            }
+        }
     }
 ?>
 
@@ -29,6 +75,15 @@
     <title>BookStore:: Checkout</title>
 </head>
 <body>
-    
+    <h1>Confirm Order</h1>
+    <form method="post" action="checkout.php">
+      <p><label>FirstName: </label><input type="text" name="firstName" /></p>
+      <p><label>LastName: </label><input type="text" name="lastName" /></p>
+      <p><label>Email Address: </label><input type="text" name="email" /></p>
+      <p><label>phoneNumber: </label><input type="text" name="phoneNumber" /></p>
+      <p>
+        <input type="submit" />
+      </p>
+    </form>
 </body>
 </html>

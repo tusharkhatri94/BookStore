@@ -2,17 +2,6 @@ CREATE DATABASE bookstoreschema;
 
 USE bookstoreschema;
 
-CREATE TABLE Orders (
-    orderID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    orderDate DATETIME NOT NULL,
-    totalPrice DECIMAL(10,2) NOT NULL,
-    firstName varchar(255) NOT NULL,
-    lastName varchar(255) NOT NULL,
-    emailAddress varchar(255) NOT NULL,
-    phoneNumber varchar(255) NOT NULL,
-);
-
-
 CREATE TABLE Authors (
     authorID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     authorFirstName varchar(255) NOT NULL,
@@ -45,5 +34,18 @@ CREATE TABLE Inventory (
     CONSTRAINT fk_bookID FOREIGN KEY (bookID)
     REFERENCES Books(bookID),
     availableQuantity int NOT NULL
+);
+
+CREATE TABLE Orders (
+    orderID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    orderDate varchar(255) NOT NULL,
+    totalPrice DECIMAL(10,2) NOT NULL,
+    firstName varchar(255) NOT NULL,
+    lastName varchar(255) NOT NULL,
+    emailAddress varchar(255) NOT NULL,
+    phoneNumber varchar(255) NOT NULL,
+    bookID INT NOT NULL,
+    CONSTRAINT FK1_bookID FOREIGN KEY (bookID)
+    REFERENCES Books(bookID)
 );
 
